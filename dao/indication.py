@@ -6,6 +6,7 @@ class IndicationDAO:
         self.session = session
 
     def create(self, data):
+        """create new indication """
         try:
             new_indication = Indication(**data)
             self.session.add(new_indication)

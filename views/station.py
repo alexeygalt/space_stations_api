@@ -10,9 +10,11 @@ stations_ns = Namespace('stations')
 @stations_ns.route('/')
 class StationsView(Resource):
     def get(self):
+        """show all stations"""
         return stations_schema.dump(station_dao.get_all()), 200
 
     def post(self):
+        """add new station"""
         upload_data = request.get_json()
         if station_dao.create(upload_data):
             return station_schema.dump(station_dao.create(upload_data)), 201
@@ -22,11 +24,13 @@ class StationsView(Resource):
 @stations_ns.route("/<int:sid>")
 class StationsView(Resource):
     def get(self, sid):
+        """get one station by id"""
         if station_dao.get_one(sid):
             return station_schema.dump(station_dao.get_one(sid)), 200
         return f'Station {sid} not found', 404
 
     def put(self, sid: int):
+        """change station's name"""
         upload_data = request.get_json()
         if not upload_data.get('id'):
             upload_data['id'] = sid
@@ -35,6 +39,7 @@ class StationsView(Resource):
         return f'Station {upload_data.get("id")} not found', 404
 
     def delete(self, sid):
+        """delete station"""
         if station_dao.get_one(sid):
             return station_schema.dump(station_dao.delete(sid)), 204
         return f'Station {sid} not found', 404
@@ -43,11 +48,13 @@ class StationsView(Resource):
 @stations_ns.route("/<int:sid>/state/")
 class StationsView(Resource):
     def get(self, sid):
+        """get station position"""
         if station_dao.get_one(sid):
             return station_schema_state.dump(station_dao.get_one(sid)), 200
         return f'Station {sid} not found', 404
 
     def post(self, sid):
+        """change station's position"""
         indication_data = request.get_json()
         if station_dao.get_one(sid):
             if indication_dao.create(indication_data):

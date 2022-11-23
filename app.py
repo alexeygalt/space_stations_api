@@ -7,6 +7,7 @@ from views.station import stations_ns
 
 
 def create_app(config_object):
+    """create app with all settings"""
     app = Flask(__name__)
     app.config.from_object(config_object)
     register_extensions(app)
@@ -14,6 +15,7 @@ def create_app(config_object):
 
 
 def register_extensions(app):
+    """init db and register namespaces"""
     db.init_app(app)
     api = Api(app)
     api.add_namespace(stations_ns)
@@ -26,11 +28,6 @@ def create_data():
 
 app = create_app(Config())
 create_data()
-
-
-# @app.errorhandler(404)
-# def page_404_error(error):
-#     return jsonify({"Error 404": 'Sorry, information Not Found'}), 404
 
 
 if __name__ == '__main__':

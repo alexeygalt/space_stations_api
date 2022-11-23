@@ -3,6 +3,7 @@ from marshmallow import Schema, fields
 
 
 class Indication(db.Model):
+    """model to indication object"""
     __tablename__ = 'indication'
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String, nullable=False)
@@ -11,6 +12,7 @@ class Indication(db.Model):
 
 
 class IndicationSchema(Schema):
+    """simple schema to Indication's model serialization """
     id = fields.Integer()
     user = fields.String()
     axis = fields.String()

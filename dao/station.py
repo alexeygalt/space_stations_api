@@ -7,12 +7,15 @@ class StationDAO:
         self.session = session
 
     def get_all(self):
+        """get one Station from db"""
         return self.session.query(Station).all()
 
     def get_one(self, sid):
+        """get all Stations from db"""
         return self.session.query(Station).get(sid)
 
     def create(self, data):
+        """create new Station"""
         try:
             new_station = Station(
                 name=data.get('name')
@@ -25,6 +28,7 @@ class StationDAO:
             self.session.rollback()
 
     def update(self, data):
+        """update Station's name"""
         try:
             station = self.session.query(Station).get(data['id'])
             station.name = data.get('name')
@@ -36,6 +40,7 @@ class StationDAO:
             self.session.rollback()
 
     def update_partial(self, data,sid):
+        """update Station's position"""
         station = self.session.query(Station).get(sid)
         position = data.get('axis')
         distance = data.get('distance')
@@ -53,6 +58,7 @@ class StationDAO:
 
 
     def delete(self, pk):
+        """delete Station from db"""
         try:
             station = self.session.query(Station).get(pk)
             self.session.delete(station)
