@@ -8,7 +8,7 @@ class Station(db.Model):
     __tablename__ = 'station'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
-    condition = db.Column(db.String, default='running', onupdate='broken')
+    condition = db.Column(db.String, default='running')
     date_created = db.Column(db.DateTime, default=func.now())
     date_broken = db.Column(db.DateTime)
     x = db.Column(db.Integer, default=100)

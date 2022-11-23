@@ -39,7 +39,7 @@ class StationDAO:
             print(e)
             self.session.rollback()
 
-    def update_partial(self, data,sid):
+    def update_partial(self, data, sid):
         """update Station's position"""
         station = self.session.query(Station).get(sid)
         position = data.get('axis')
@@ -50,12 +50,12 @@ class StationDAO:
             station.y += distance
         else:
             station.z += distance
-        if any([x < 0 for x in (station.x, station.y, station.z)]):
+        if not all([item > 0 for item in (int(station.x), int(station.y), int(station.z))]):
             station.condition = 'broken'
             station.date_broken = func.now()
         self.session.add(station)
         self.session.commit()
-
+        return station
 
     def delete(self, pk):
         """delete Station from db"""
