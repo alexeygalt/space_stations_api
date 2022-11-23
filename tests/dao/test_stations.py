@@ -5,7 +5,7 @@ from dao.station import StationDAO
 from dao.models.station import Station
 
 
-class TestDirectorsDAO:
+class TestStationsDAO:
 
     @pytest.fixture
     def stations_dao(self, db):
