@@ -1,0 +1,39 @@
+POST http://localhost:10001/stations/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "test_station"
+}
+
+###
+
+PUT http://localhost:10001/stations/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id" : 1,
+  "name" : "changed"
+}
+
+
+###
+DELETE http://localhost:10001/stations/1
+
+###
+
+GET http://127.0.0.1:10001/stations/1/state/
+Accept: application/json
+
+###
+
+POST http://127.0.0.1:10001/stations/1/state/
+Accept: application/json
+Content-Type: application/json
+
+{
+"user":"alex",
+"axis": "y",
+"distance": 100}
+
