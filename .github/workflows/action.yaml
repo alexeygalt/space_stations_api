@@ -36,15 +36,15 @@ jobs:
           source: "deploy/docker-compose.yaml,deploy/docker-config.py"
           target: "space_api"
           strip_components: 1
-      - name: deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          script: |
-            cd space_api
-            echo ${{ secrets.PASSWORD }} | sudo -S docker-compose up -d
+#      - name: deploy
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USERNAME }}
+#          password: ${{ secrets.PASSWORD }}
+#          script: |
+#            cd space_api
+#            echo ${{ secrets.PASSWORD }} | sudo -S docker-compose up -d
             
 
 
