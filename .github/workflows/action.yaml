@@ -12,6 +12,28 @@ jobs:
         run: echo ${{secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: docker run
         run: docker push alexeygalt/space_api:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+  deploy:
+    runs-on : ubuntu-latest
+    needs: build_and_push
+    steps:
+      - name: clone code
+        uses: actions/checkout@v2
+      - name: render config
+        run: |
+          mkdir deploy
+          cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
+          cat docker-config-ci.py | envsubst > deploy/dockey-config.py
+      - name: copy files to server
+        uses: actions/checkout@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          source: "deploy/docker-compose.yaml,deploy/docker-config.py"
+          target: "space_api"
+          strip_components: 1
+
+
 
 
 
