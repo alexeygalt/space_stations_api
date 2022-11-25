@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+    platform: linux/amd64
+    ports:
+      - 80:80
+    volumes:
+      - ./docker-config.py:/code/config.py
+  pg:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: space_app
+      POSTGRES_PASSWORD: chester06011992
+      POSTGRES_DB: space_app
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
