@@ -24,7 +24,7 @@ jobs:
           cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
           cat docker-config-ci.py | envsubst > deploy/dockey-config.py
       - name: copy files to server
-        uses: actions/checkout@master
+        uses: actions/checkout@deploy
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
