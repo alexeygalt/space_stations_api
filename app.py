@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restx import Api
 
 from config import Config
-from setup_db import db
+from setup_db import db, migrate
 from views.station import stations_ns
 
 
@@ -17,18 +17,19 @@ def create_app(config_object):
 def register_extensions(app):
     """init db and register namespaces"""
     db.init_app(app)
+    migrate.init_app(app, db)
     api = Api(app)
     api.add_namespace(stations_ns)
 
 
-def create_data():
-    with app.app_context():
-        db.create_all()
+# def create_data():
+#     with app.app_context():
+#         db.create_all()
 
 
 app = create_app(Config())
-create_data()
+# create_data()
 
 
-if __name__ == '__main__':
-    app.run(host="localhost", port=10001, debug=True)
+# if __name__ == '__main__':
+#     app.run(host="localhost", port=10001, debug=True)
