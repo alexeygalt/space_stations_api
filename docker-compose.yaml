@@ -4,11 +4,28 @@ services:
   api:
     build:
       context: .
+    image: alexeygalt/space_api
     platform: linux/amd64
     ports:
       - 80:80
     volumes:
       - ./docker-config.py:/code/config.py
+    depends_on:
+      pg:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+  migrations:
+    build:
+      context: .
+    image: alexeygalt/space_api
+    platform: linux/amd64
+    volumes:
+      - ./docker-config.py:/code/config.py
+    depends_on:
+      pg:
+        condition: service_healthy
+    command: flask db upgrade
   pg:
     image: postgres:latest
     environment:
@@ -17,3 +34,8 @@ services:
       POSTGRES_DB: space_app
     volumes:
       - ./pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
